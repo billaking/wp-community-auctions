@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class WCAM_User_Dashboard {
+class BK_AUCTION_User_Dashboard {
 
     private static $instance = null;
 
@@ -19,10 +19,10 @@ class WCAM_User_Dashboard {
     }
 
     private function __construct() {
-        add_shortcode('wcam_dashboard', array($this, 'dashboard_shortcode'));
-        add_shortcode('wcam_my_auctions', array($this, 'my_auctions_shortcode'));
-        add_shortcode('wcam_my_bids', array($this, 'my_bids_shortcode'));
-        add_shortcode('wcam_create_auction', array($this, 'create_auction_shortcode'));
+        add_shortcode('bk_auction_dashboard', array($this, 'dashboard_shortcode'));
+        add_shortcode('bk_auction_my_auctions', array($this, 'my_auctions_shortcode'));
+        add_shortcode('bk_auction_my_bids', array($this, 'my_bids_shortcode'));
+        add_shortcode('bk_auction_create_auction', array($this, 'create_auction_shortcode'));
 
         add_action('init', array($this, 'handle_auction_submission'));
     }
@@ -32,11 +32,11 @@ class WCAM_User_Dashboard {
      */
     public function dashboard_shortcode($atts) {
         if (!is_user_logged_in()) {
-            return '<p>' . __('Please log in to view your dashboard.', 'wp-community-auction-manager') . '</p>';
+            return '<p>' . __('Please log in to view your dashboard.', 'bk-auction-manager') . '</p>';
         }
 
         ob_start();
-        include WCAM_PLUGIN_DIR . 'templates/dashboard/main.php';
+        include BK_AUCTION_PLUGIN_DIR . 'templates/dashboard/main.php';
         return ob_get_clean();
     }
 
@@ -45,13 +45,13 @@ class WCAM_User_Dashboard {
      */
     public function my_auctions_shortcode($atts) {
         if (!is_user_logged_in()) {
-            return '<p>' . __('Please log in to view your auctions.', 'wp-community-auction-manager') . '</p>';
+            return '<p>' . __('Please log in to view your auctions.', 'bk-auction-manager') . '</p>';
         }
 
         $user_id = get_current_user_id();
 
         $args = array(
-            'post_type' => 'wcam_auction',
+            'post_type' => 'bk_auction_auction',
             'author' => $user_id,
             'posts_per_page' => -1,
             'orderby' => 'date',
@@ -61,7 +61,7 @@ class WCAM_User_Dashboard {
         $auctions = new WP_Query($args);
 
         ob_start();
-        include WCAM_PLUGIN_DIR . 'templates/dashboard/my-auctions.php';
+        include BK_AUCTION_PLUGIN_DIR . 'templates/dashboard/my-auctions.php';
         wp_reset_postdata();
         return ob_get_clean();
     }
@@ -71,15 +71,15 @@ class WCAM_User_Dashboard {
      */
     public function my_bids_shortcode($atts) {
         if (!is_user_logged_in()) {
-            return '<p>' . __('Please log in to view your bids.', 'wp-community-auction-manager') . '</p>';
+            return '<p>' . __('Please log in to view your bids.', 'bk-auction-manager') . '</p>';
         }
 
         $user_id = get_current_user_id();
-        $bidding = WCAM_Bidding::get_instance();
+        $bidding = BK_AUCTION_Bidding::get_instance();
         $bids = $bidding->get_user_bids($user_id, 50);
 
         ob_start();
-        include WCAM_PLUGIN_DIR . 'templates/dashboard/my-bids.php';
+        include BK_AUCTION_PLUGIN_DIR . 'templates/dashboard/my-bids.php';
         return ob_get_clean();
     }
 
@@ -88,11 +88,11 @@ class WCAM_User_Dashboard {
      */
     public function create_auction_shortcode($atts) {
         if (!is_user_logged_in()) {
-            return '<p>' . __('Please log in to create an auction.', 'wp-community-auction-manager') . '</p>';
+            return '<p>' . __('Please log in to create an auction.', 'bk-auction-manager') . '</p>';
         }
 
         ob_start();
-        include WCAM_PLUGIN_DIR . 'templates/dashboard/create-auction.php';
+        include BK_AUCTION_PLUGIN_DIR . 'templates/dashboard/create-auction.php';
         return ob_get_clean();
     }
 
@@ -100,14 +100,14 @@ class WCAM_User_Dashboard {
      * Handle auction submission from frontend
      */
     public function handle_auction_submission() {
-        if (!isset($_POST['wcam_submit_auction']) || !is_user_logged_in()) {
+        if (!isset($_POST['bk_auction_submit_auction']) || !is_user_logged_in()) {
             return;
         }
 
         // Verify nonce
-        if (!isset($_POST['wcam_create_auction_nonce']) ||
-            !wp_verify_nonce($_POST['wcam_create_auction_nonce'], 'wcam_create_auction')) {
-            wp_die(__('Security check failed.', 'wp-community-auction-manager'));
+        if (!isset($_POST['bk_auction_create_auction_nonce']) ||
+            !wp_verify_nonce($_POST['bk_auction_create_auction_nonce'], 'bk_auction_create_auction')) {
+            wp_die(__('Security check failed.', 'bk-auction-manager'));
         }
 
         // Sanitize and validate data
@@ -125,7 +125,7 @@ class WCAM_User_Dashboard {
             'post_title' => $title,
             'post_content' => $description,
             'post_status' => 'publish',
-            'post_type' => 'wcam_auction',
+            'post_type' => 'bk_auction_auction',
             'post_author' => get_current_user_id(),
         );
 
@@ -133,13 +133,13 @@ class WCAM_User_Dashboard {
 
         if ($auction_id && !is_wp_error($auction_id)) {
             // Save meta data
-            update_post_meta($auction_id, '_wcam_starting_price', $starting_price);
-            update_post_meta($auction_id, '_wcam_reserve_price', $reserve_price);
-            update_post_meta($auction_id, '_wcam_buy_now_price', $buy_now_price);
-            update_post_meta($auction_id, '_wcam_bid_increment', $bid_increment);
-            update_post_meta($auction_id, '_wcam_start_date', $start_date);
-            update_post_meta($auction_id, '_wcam_end_date', $end_date);
-            update_post_meta($auction_id, '_wcam_auction_status', 'active');
+            update_post_meta($auction_id, '_bk_auction_starting_price', $starting_price);
+            update_post_meta($auction_id, '_bk_auction_reserve_price', $reserve_price);
+            update_post_meta($auction_id, '_bk_auction_buy_now_price', $buy_now_price);
+            update_post_meta($auction_id, '_bk_auction_bid_increment', $bid_increment);
+            update_post_meta($auction_id, '_bk_auction_start_date', $start_date);
+            update_post_meta($auction_id, '_bk_auction_end_date', $end_date);
+            update_post_meta($auction_id, '_bk_auction_auction_status', 'active');
 
             // Handle photo gallery uploads
             require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -155,7 +155,7 @@ class WCAM_User_Dashboard {
                     $attachment_id = media_handle_upload($file_key, $auction_id);
 
                     if (!is_wp_error($attachment_id)) {
-                        update_post_meta($auction_id, '_wcam_photo_' . $key, $attachment_id);
+                        update_post_meta($auction_id, '_bk_auction_photo_' . $key, $attachment_id);
 
                         // Set first uploaded photo as featured image
                         if (!$first_photo_set) {
@@ -181,15 +181,15 @@ class WCAM_User_Dashboard {
         $stats = array();
 
         // Total auctions created
-        $stats['total_auctions'] = count_user_posts($user_id, 'wcam_auction');
+        $stats['total_auctions'] = count_user_posts($user_id, 'bk_auction_auction');
 
         // Active auctions
         $active_auctions = get_posts(array(
-            'post_type' => 'wcam_auction',
+            'post_type' => 'bk_auction_auction',
             'author' => $user_id,
             'meta_query' => array(
                 array(
-                    'key' => '_wcam_auction_status',
+                    'key' => '_bk_auction_auction_status',
                     'value' => 'active',
                 )
             ),
@@ -198,14 +198,14 @@ class WCAM_User_Dashboard {
         $stats['active_auctions'] = count($active_auctions);
 
         // Total bids placed
-        $table_name = $wpdb->prefix . 'wcam_bids';
+        $table_name = $wpdb->prefix . 'bk_auction_bids';
         $stats['total_bids'] = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE user_id = %d",
             $user_id
         ));
 
         // Winning auctions
-        $bidding = WCAM_Bidding::get_instance();
+        $bidding = BK_AUCTION_Bidding::get_instance();
         $winning = $bidding->get_winning_auctions($user_id);
         $stats['winning_auctions'] = count($winning);
 

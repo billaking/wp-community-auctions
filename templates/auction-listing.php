@@ -26,10 +26,10 @@ if (!defined('ABSPATH')) {
         <div class="wcam-auctions-grid">
             <?php while ($auctions->have_posts()): $auctions->the_post();
                 $auction_id = get_the_ID();
-                $current_bid = wcam_get_current_bid($auction_id);
-                $bid_count = wcam_get_bid_count($auction_id);
-                $time_remaining = wcam_get_time_remaining($auction_id);
-                $status = get_post_meta($auction_id, '_wcam_auction_status', true);
+                $current_bid = bk_auction_get_current_bid($auction_id);
+                $bid_count = bk_auction_get_bid_count($auction_id);
+                $time_remaining = bk_auction_get_time_remaining($auction_id);
+                $status = get_post_meta($auction_id, '_bk_auction_auction_status', true);
             ?>
 
                 <div class="wcam-auction-card wcam-status-<?php echo esc_attr($status); ?>">
@@ -44,13 +44,13 @@ if (!defined('ABSPATH')) {
                             <?php endif; ?>
                         </a>
                         <span class="wcam-status-badge">
-                            <?php echo esc_html(wcam_get_status_label($auction_id)); ?>
+                            <?php echo esc_html(bk_auction_get_status_label($auction_id)); ?>
                         </span>
                     </div>
 
                     <div class="wcam-auction-body">
                         <?php
-                        $auction_categories = get_the_terms($auction_id, 'wcam_category');
+                        $auction_categories = get_the_terms($auction_id, 'bk_auction_category');
                         if ($auction_categories && !is_wp_error($auction_categories)):
                         ?>
                             <div class="wcam-auction-categories">
@@ -66,23 +66,23 @@ if (!defined('ABSPATH')) {
 
                         <div class="wcam-auction-meta">
                             <div class="wcam-meta-item">
-                                <span class="wcam-label"><?php _e('Current Bid:', 'wp-community-auction-manager'); ?></span>
-                                <span class="wcam-value wcam-price"><?php echo wcam_format_price($current_bid); ?></span>
+                                <span class="wcam-label"><?php _e('Current Bid:', 'bk-auction-manager'); ?></span>
+                                <span class="wcam-value wcam-price"><?php echo bk_auction_format_price($current_bid); ?></span>
                             </div>
 
                             <div class="wcam-meta-item">
-                                <span class="wcam-label"><?php _e('Bids:', 'wp-community-auction-manager'); ?></span>
+                                <span class="wcam-label"><?php _e('Bids:', 'bk-auction-manager'); ?></span>
                                 <span class="wcam-value"><?php echo absint($bid_count); ?></span>
                             </div>
 
                             <div class="wcam-meta-item wcam-time">
-                                <span class="wcam-label"><?php _e('Time Left:', 'wp-community-auction-manager'); ?></span>
+                                <span class="wcam-label"><?php _e('Time Left:', 'bk-auction-manager'); ?></span>
                                 <span class="wcam-value"><?php echo esc_html($time_remaining['time']); ?></span>
                             </div>
                         </div>
 
                         <a href="<?php the_permalink(); ?>" class="wcam-btn wcam-btn-primary wcam-btn-block">
-                            <?php _e('View Auction', 'wp-community-auction-manager'); ?>
+                            <?php _e('View Auction', 'bk-auction-manager'); ?>
                         </a>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ if (!defined('ABSPATH')) {
 
     <?php else: ?>
 
-        <p class="wcam-no-auctions"><?php _e('No auctions found.', 'wp-community-auction-manager'); ?></p>
+        <p class="wcam-no-auctions"><?php _e('No auctions found.', 'bk-auction-manager'); ?></p>
 
     <?php endif; ?>
 

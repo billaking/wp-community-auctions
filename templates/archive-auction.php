@@ -21,23 +21,23 @@ get_header();
     </div>
 
     <header class="page-header">
-        <h1 class="page-title"><?php _e('Auctions', 'wp-community-auction-manager'); ?></h1>
+        <h1 class="page-title"><?php _e('Auctions', 'bk-auction-manager'); ?></h1>
 
         <?php
         // Category filter
-        $categories = get_terms(array('taxonomy' => 'wcam_category', 'hide_empty' => true));
+        $categories = get_terms(array('taxonomy' => 'bk_auction_category', 'hide_empty' => true));
         if ($categories):
         ?>
             <div class="wcam-category-filters">
                 <div class="wcam-filter-label">
                     <span class="filter-icon">🏷️</span>
-                    <?php _e('Browse by Category:', 'wp-community-auction-manager'); ?>
+                    <?php _e('Browse by Category:', 'bk-auction-manager'); ?>
                 </div>
                 <div class="wcam-category-pills">
                     <button class="wcam-category-pill active" data-category="">
                         <span class="pill-icon">✨</span>
-                        <?php _e('All Auctions', 'wp-community-auction-manager'); ?>
-                        <span class="pill-count"><?php echo wp_count_posts('wcam_auction')->publish; ?></span>
+                        <?php _e('All Auctions', 'bk-auction-manager'); ?>
+                        <span class="pill-count"><?php echo wp_count_posts('bk_auction_auction')->publish; ?></span>
                     </button>
                     <?php foreach ($categories as $category): ?>
                         <button class="wcam-category-pill" data-category="<?php echo esc_attr($category->slug); ?>">
@@ -56,10 +56,10 @@ get_header();
         <div class="wcam-auctions-grid">
             <?php while (have_posts()): the_post();
                 $auction_id = get_the_ID();
-                $current_bid = wcam_get_current_bid($auction_id);
-                $bid_count = wcam_get_bid_count($auction_id);
-                $time_remaining = wcam_get_time_remaining($auction_id);
-                $status = get_post_meta($auction_id, '_wcam_auction_status', true);
+                $current_bid = bk_auction_get_current_bid($auction_id);
+                $bid_count = bk_auction_get_bid_count($auction_id);
+                $time_remaining = bk_auction_get_time_remaining($auction_id);
+                $status = get_post_meta($auction_id, '_bk_auction_auction_status', true);
             ?>
 
                 <div class="wcam-auction-card wcam-status-<?php echo esc_attr($status); ?>">
@@ -74,13 +74,13 @@ get_header();
                             <?php endif; ?>
                         </a>
                         <span class="wcam-status-badge">
-                            <?php echo esc_html(wcam_get_status_label($auction_id)); ?>
+                            <?php echo esc_html(bk_auction_get_status_label($auction_id)); ?>
                         </span>
                     </div>
 
                     <div class="wcam-auction-body">
                         <?php
-                        $auction_categories = get_the_terms($auction_id, 'wcam_category');
+                        $auction_categories = get_the_terms($auction_id, 'bk_auction_category');
                         if ($auction_categories && !is_wp_error($auction_categories)):
                         ?>
                             <div class="wcam-auction-categories">
@@ -96,23 +96,23 @@ get_header();
 
                         <div class="wcam-auction-meta">
                             <div class="wcam-meta-item">
-                                <span class="wcam-label"><?php _e('Current Bid:', 'wp-community-auction-manager'); ?></span>
-                                <span class="wcam-value wcam-price"><?php echo wcam_format_price($current_bid); ?></span>
+                                <span class="wcam-label"><?php _e('Current Bid:', 'bk-auction-manager'); ?></span>
+                                <span class="wcam-value wcam-price"><?php echo bk_auction_format_price($current_bid); ?></span>
                             </div>
 
                             <div class="wcam-meta-item">
-                                <span class="wcam-label"><?php _e('Bids:', 'wp-community-auction-manager'); ?></span>
+                                <span class="wcam-label"><?php _e('Bids:', 'bk-auction-manager'); ?></span>
                                 <span class="wcam-value"><?php echo absint($bid_count); ?></span>
                             </div>
 
                             <div class="wcam-meta-item wcam-time">
-                                <span class="wcam-label"><?php _e('Time Left:', 'wp-community-auction-manager'); ?></span>
+                                <span class="wcam-label"><?php _e('Time Left:', 'bk-auction-manager'); ?></span>
                                 <span class="wcam-value"><?php echo esc_html($time_remaining['time']); ?></span>
                             </div>
                         </div>
 
                         <a href="<?php the_permalink(); ?>" class="wcam-btn wcam-btn-primary wcam-btn-block">
-                            <?php _e('View Auction', 'wp-community-auction-manager'); ?>
+                            <?php _e('View Auction', 'bk-auction-manager'); ?>
                         </a>
                     </div>
                 </div>
@@ -124,15 +124,15 @@ get_header();
             <?php
             the_posts_pagination(array(
                 'mid_size' => 2,
-                'prev_text' => __('&laquo; Previous', 'wp-community-auction-manager'),
-                'next_text' => __('Next &raquo;', 'wp-community-auction-manager'),
+                'prev_text' => __('&laquo; Previous', 'bk-auction-manager'),
+                'next_text' => __('Next &raquo;', 'bk-auction-manager'),
             ));
             ?>
         </div>
 
     <?php else: ?>
 
-        <p class="wcam-no-auctions"><?php _e('No auctions found.', 'wp-community-auction-manager'); ?></p>
+        <p class="wcam-no-auctions"><?php _e('No auctions found.', 'bk-auction-manager'); ?></p>
 
     <?php endif; ?>
 

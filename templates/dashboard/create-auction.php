@@ -7,8 +7,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!get_option('wcam_allow_frontend_submission', true)) {
-    echo '<p>' . __('Auction submission is currently disabled.', 'wp-community-auction-manager') . '</p>';
+if (!get_option('bk_auction_allow_frontend_submission', true)) {
+    echo '<p>' . __('Auction submission is currently disabled.', 'bk-auction-manager') . '</p>';
     return;
 }
 ?>
@@ -28,34 +28,34 @@ if (!get_option('wcam_allow_frontend_submission', true)) {
         </ul>
     </div>
 
-    <h3><?php _e('Create New Auction', 'wp-community-auction-manager'); ?></h3>
+    <h3><?php _e('Create New Auction', 'bk-auction-manager'); ?></h3>
 
     <form method="post" enctype="multipart/form-data" class="wcam-form">
-        <?php wp_nonce_field('wcam_create_auction', 'wcam_create_auction_nonce'); ?>
+        <?php wp_nonce_field('bk_auction_create_auction', 'bk_auction_create_auction_nonce'); ?>
 
         <div class="form-group">
-            <label for="auction_title"><?php _e('Auction Title *', 'wp-community-auction-manager'); ?></label>
+            <label for="auction_title"><?php _e('Auction Title *', 'bk-auction-manager'); ?></label>
             <input type="text" id="auction_title" name="auction_title" required>
         </div>
 
         <div class="form-group">
-            <label for="auction_description"><?php _e('Description *', 'wp-community-auction-manager'); ?></label>
+            <label for="auction_description"><?php _e('Description *', 'bk-auction-manager'); ?></label>
             <textarea id="auction_description" name="auction_description" rows="6" required></textarea>
         </div>
 
         <div class="form-group">
-            <label><?php _e('Item Photos (Up to 5)', 'wp-community-auction-manager'); ?></label>
+            <label><?php _e('Item Photos (Up to 5)', 'bk-auction-manager'); ?></label>
             <p class="description" style="margin-bottom: 12px;">
-                <?php _e('Upload photos showing different angles of your item. This helps buyers see exactly what they\'re bidding on.', 'wp-community-auction-manager'); ?>
+                <?php _e('Upload photos showing different angles of your item. This helps buyers see exactly what they\'re bidding on.', 'bk-auction-manager'); ?>
             </p>
             <div class="wcam-photo-upload-grid">
                 <?php
                 $photo_labels = array(
-                    'top' => __('Top View', 'wp-community-auction-manager'),
-                    'front' => __('Front View', 'wp-community-auction-manager'),
-                    'left' => __('Left Side', 'wp-community-auction-manager'),
-                    'right' => __('Right Side', 'wp-community-auction-manager'),
-                    'back' => __('Back View', 'wp-community-auction-manager'),
+                    'top' => __('Top View', 'bk-auction-manager'),
+                    'front' => __('Front View', 'bk-auction-manager'),
+                    'left' => __('Left Side', 'bk-auction-manager'),
+                    'right' => __('Right Side', 'bk-auction-manager'),
+                    'back' => __('Back View', 'bk-auction-manager'),
                 );
                 foreach ($photo_labels as $key => $label):
                 ?>
@@ -69,47 +69,47 @@ if (!get_option('wcam_allow_frontend_submission', true)) {
 
         <div class="form-row">
             <div class="form-group">
-                <label for="starting_price"><?php _e('Starting Price *', 'wp-community-auction-manager'); ?></label>
+                <label for="starting_price"><?php _e('Starting Price *', 'bk-auction-manager'); ?></label>
                 <input type="number" id="starting_price" name="starting_price" step="0.01" min="0" required>
             </div>
 
             <div class="form-group">
-                <label for="bid_increment"><?php _e('Bid Increment *', 'wp-community-auction-manager'); ?></label>
+                <label for="bid_increment"><?php _e('Bid Increment *', 'bk-auction-manager'); ?></label>
                 <input type="number" id="bid_increment" name="bid_increment" step="0.01" min="0.01" value="1.00" required>
             </div>
         </div>
 
-        <?php if (get_option('wcam_enable_reserve_price', true)): ?>
+        <?php if (get_option('bk_auction_enable_reserve_price', true)): ?>
             <div class="form-group">
-                <label for="reserve_price"><?php _e('Reserve Price (Optional)', 'wp-community-auction-manager'); ?></label>
+                <label for="reserve_price"><?php _e('Reserve Price (Optional)', 'bk-auction-manager'); ?></label>
                 <input type="number" id="reserve_price" name="reserve_price" step="0.01" min="0">
-                <p class="description"><?php _e('Minimum price you will accept', 'wp-community-auction-manager'); ?></p>
+                <p class="description"><?php _e('Minimum price you will accept', 'bk-auction-manager'); ?></p>
             </div>
         <?php endif; ?>
 
-        <?php if (get_option('wcam_enable_buy_now', true)): ?>
+        <?php if (get_option('bk_auction_enable_buy_now', true)): ?>
             <div class="form-group">
-                <label for="buy_now_price"><?php _e('Buy Now Price (Optional)', 'wp-community-auction-manager'); ?></label>
+                <label for="buy_now_price"><?php _e('Buy Now Price (Optional)', 'bk-auction-manager'); ?></label>
                 <input type="number" id="buy_now_price" name="buy_now_price" step="0.01" min="0">
-                <p class="description"><?php _e('Instant purchase price', 'wp-community-auction-manager'); ?></p>
+                <p class="description"><?php _e('Instant purchase price', 'bk-auction-manager'); ?></p>
             </div>
         <?php endif; ?>
 
         <div class="form-row">
             <div class="form-group">
-                <label for="start_date"><?php _e('Start Date & Time *', 'wp-community-auction-manager'); ?></label>
+                <label for="start_date"><?php _e('Start Date & Time *', 'bk-auction-manager'); ?></label>
                 <input type="datetime-local" id="start_date" name="start_date" required>
             </div>
 
             <div class="form-group">
-                <label for="end_date"><?php _e('End Date & Time *', 'wp-community-auction-manager'); ?></label>
+                <label for="end_date"><?php _e('End Date & Time *', 'bk-auction-manager'); ?></label>
                 <input type="datetime-local" id="end_date" name="end_date" required>
             </div>
         </div>
 
         <div class="form-actions">
-            <button type="submit" name="wcam_submit_auction" class="wcam-btn wcam-btn-primary">
-                <?php _e('Create Auction', 'wp-community-auction-manager'); ?>
+            <button type="submit" name="bk_auction_submit_auction" class="wcam-btn wcam-btn-primary">
+                <?php _e('Create Auction', 'bk-auction-manager'); ?>
             </button>
         </div>
     </form>

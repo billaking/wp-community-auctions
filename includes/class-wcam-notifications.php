@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class WCAM_Notifications {
+class BK_AUCTION_Notifications {
 
     private static $instance = null;
 
@@ -19,9 +19,9 @@ class WCAM_Notifications {
     }
 
     private function __construct() {
-        add_action('wcam_bid_placed', array($this, 'notify_bid_placed'), 10, 4);
-        add_action('wcam_buy_now_completed', array($this, 'notify_buy_now'), 10, 3);
-        add_action('wcam_auction_ended', array($this, 'notify_auction_ended'), 10, 1);
+        add_action('bk_auction_bid_placed', array($this, 'notify_bid_placed'), 10, 4);
+        add_action('bk_auction_buy_now_completed', array($this, 'notify_buy_now'), 10, 3);
+        add_action('bk_auction_auction_ended', array($this, 'notify_auction_ended'), 10, 1);
     }
 
     /**
@@ -33,15 +33,15 @@ class WCAM_Notifications {
         $owner_email = get_the_author_meta('user_email', $auction->post_author);
         $bidder = get_userdata($user_id);
 
-        $subject = sprintf(__('[%s] New bid on your auction: %s', 'wp-community-auction-manager'),
+        $subject = sprintf(__('[%s] New bid on your auction: %s', 'bk-auction-manager'),
             get_bloginfo('name'),
             $auction->post_title
         );
 
         $message = sprintf(
-            __("Hello,\n\nA new bid has been placed on your auction '%s'.\n\nBid Amount: %s\nBidder: %s\n\nView auction: %s\n\nThank you!", 'wp-community-auction-manager'),
+            __("Hello,\n\nA new bid has been placed on your auction '%s'.\n\nBid Amount: %s\nBidder: %s\n\nView auction: %s\n\nThank you!", 'bk-auction-manager'),
             $auction->post_title,
-            wcam_format_price($bid_amount),
+            bk_auction_format_price($bid_amount),
             $bidder->display_name,
             get_permalink($auction_id)
         );
@@ -49,20 +49,20 @@ class WCAM_Notifications {
         wp_mail($owner_email, $subject, $message);
 
         // Notify previous highest bidder (they've been outbid)
-        $previous_bidder_id = get_post_meta($auction_id, '_wcam_highest_bidder', true);
+        $previous_bidder_id = get_post_meta($auction_id, '_bk_auction_highest_bidder', true);
         if ($previous_bidder_id && $previous_bidder_id != $user_id) {
             $previous_bidder = get_userdata($previous_bidder_id);
 
-            $outbid_subject = sprintf(__('[%s] You have been outbid on: %s', 'wp-community-auction-manager'),
+            $outbid_subject = sprintf(__('[%s] You have been outbid on: %s', 'bk-auction-manager'),
                 get_bloginfo('name'),
                 $auction->post_title
             );
 
             $outbid_message = sprintf(
-                __("Hello %s,\n\nYou have been outbid on the auction '%s'.\n\nNew Bid Amount: %s\n\nPlace a new bid: %s\n\nThank you!", 'wp-community-auction-manager'),
+                __("Hello %s,\n\nYou have been outbid on the auction '%s'.\n\nNew Bid Amount: %s\n\nPlace a new bid: %s\n\nThank you!", 'bk-auction-manager'),
                 $previous_bidder->display_name,
                 $auction->post_title,
-                wcam_format_price($bid_amount),
+                bk_auction_format_price($bid_amount),
                 get_permalink($auction_id)
             );
 
@@ -70,16 +70,16 @@ class WCAM_Notifications {
         }
 
         // Notify current bidder (confirmation)
-        $confirmation_subject = sprintf(__('[%s] Bid confirmation for: %s', 'wp-community-auction-manager'),
+        $confirmation_subject = sprintf(__('[%s] Bid confirmation for: %s', 'bk-auction-manager'),
             get_bloginfo('name'),
             $auction->post_title
         );
 
         $confirmation_message = sprintf(
-            __("Hello %s,\n\nYour bid has been successfully placed on '%s'.\n\nYour Bid Amount: %s\n\nView auction: %s\n\nThank you!", 'wp-community-auction-manager'),
+            __("Hello %s,\n\nYour bid has been successfully placed on '%s'.\n\nYour Bid Amount: %s\n\nView auction: %s\n\nThank you!", 'bk-auction-manager'),
             $bidder->display_name,
             $auction->post_title,
-            wcam_format_price($bid_amount),
+            bk_auction_format_price($bid_amount),
             get_permalink($auction_id)
         );
 
@@ -95,30 +95,30 @@ class WCAM_Notifications {
         $owner_email = get_the_author_meta('user_email', $auction->post_author);
 
         // Notify buyer
-        $buyer_subject = sprintf(__('[%s] Purchase confirmation for: %s', 'wp-community-auction-manager'),
+        $buyer_subject = sprintf(__('[%s] Purchase confirmation for: %s', 'bk-auction-manager'),
             get_bloginfo('name'),
             $auction->post_title
         );
 
         $buyer_message = sprintf(
-            __("Hello %s,\n\nCongratulations! You have successfully purchased '%s' using Buy Now.\n\nPurchase Amount: %s\n\nThe seller will contact you soon.\n\nThank you!", 'wp-community-auction-manager'),
+            __("Hello %s,\n\nCongratulations! You have successfully purchased '%s' using Buy Now.\n\nPurchase Amount: %s\n\nThe seller will contact you soon.\n\nThank you!", 'bk-auction-manager'),
             $buyer->display_name,
             $auction->post_title,
-            wcam_format_price($amount)
+            bk_auction_format_price($amount)
         );
 
         wp_mail($buyer->user_email, $buyer_subject, $buyer_message);
 
         // Notify seller
-        $seller_subject = sprintf(__('[%s] Your auction has been sold: %s', 'wp-community-auction-manager'),
+        $seller_subject = sprintf(__('[%s] Your auction has been sold: %s', 'bk-auction-manager'),
             get_bloginfo('name'),
             $auction->post_title
         );
 
         $seller_message = sprintf(
-            __("Hello,\n\nYour auction '%s' has been sold via Buy Now.\n\nSale Amount: %s\nBuyer: %s (%s)\n\nPlease contact the buyer to arrange payment and delivery.\n\nThank you!", 'wp-community-auction-manager'),
+            __("Hello,\n\nYour auction '%s' has been sold via Buy Now.\n\nSale Amount: %s\nBuyer: %s (%s)\n\nPlease contact the buyer to arrange payment and delivery.\n\nThank you!", 'bk-auction-manager'),
             $auction->post_title,
-            wcam_format_price($amount),
+            bk_auction_format_price($amount),
             $buyer->display_name,
             $buyer->user_email
         );
@@ -131,9 +131,9 @@ class WCAM_Notifications {
      */
     public function notify_auction_ended($auction_id) {
         $auction = get_post($auction_id);
-        $highest_bidder_id = get_post_meta($auction_id, '_wcam_highest_bidder', true);
-        $current_bid = wcam_get_current_bid($auction_id);
-        $reserve_price = get_post_meta($auction_id, '_wcam_reserve_price', true);
+        $highest_bidder_id = get_post_meta($auction_id, '_bk_auction_highest_bidder', true);
+        $current_bid = bk_auction_get_current_bid($auction_id);
+        $reserve_price = get_post_meta($auction_id, '_bk_auction_reserve_price', true);
 
         // Check if reserve price was met
         $reserve_met = empty($reserve_price) || $current_bid >= $reserve_price;
@@ -142,16 +142,16 @@ class WCAM_Notifications {
         if ($highest_bidder_id && $reserve_met) {
             $winner = get_userdata($highest_bidder_id);
 
-            $winner_subject = sprintf(__('[%s] Congratulations! You won: %s', 'wp-community-auction-manager'),
+            $winner_subject = sprintf(__('[%s] Congratulations! You won: %s', 'bk-auction-manager'),
                 get_bloginfo('name'),
                 $auction->post_title
             );
 
             $winner_message = sprintf(
-                __("Hello %s,\n\nCongratulations! You have won the auction '%s'.\n\nWinning Bid: %s\n\nThe seller will contact you soon to arrange payment and delivery.\n\nThank you!", 'wp-community-auction-manager'),
+                __("Hello %s,\n\nCongratulations! You have won the auction '%s'.\n\nWinning Bid: %s\n\nThe seller will contact you soon to arrange payment and delivery.\n\nThank you!", 'bk-auction-manager'),
                 $winner->display_name,
                 $auction->post_title,
-                wcam_format_price($current_bid)
+                bk_auction_format_price($current_bid)
             );
 
             wp_mail($winner->user_email, $winner_subject, $winner_message);
@@ -159,15 +159,15 @@ class WCAM_Notifications {
             // Notify seller
             $owner_email = get_the_author_meta('user_email', $auction->post_author);
 
-            $seller_subject = sprintf(__('[%s] Your auction has ended: %s', 'wp-community-auction-manager'),
+            $seller_subject = sprintf(__('[%s] Your auction has ended: %s', 'bk-auction-manager'),
                 get_bloginfo('name'),
                 $auction->post_title
             );
 
             $seller_message = sprintf(
-                __("Hello,\n\nYour auction '%s' has ended.\n\nFinal Bid: %s\nWinner: %s (%s)\n\nPlease contact the winner to arrange payment and delivery.\n\nThank you!", 'wp-community-auction-manager'),
+                __("Hello,\n\nYour auction '%s' has ended.\n\nFinal Bid: %s\nWinner: %s (%s)\n\nPlease contact the winner to arrange payment and delivery.\n\nThank you!", 'bk-auction-manager'),
                 $auction->post_title,
-                wcam_format_price($current_bid),
+                bk_auction_format_price($current_bid),
                 $winner->display_name,
                 $winner->user_email
             );
@@ -177,16 +177,16 @@ class WCAM_Notifications {
             // Reserve not met
             $owner_email = get_the_author_meta('user_email', $auction->post_author);
 
-            $subject = sprintf(__('[%s] Auction ended - Reserve not met: %s', 'wp-community-auction-manager'),
+            $subject = sprintf(__('[%s] Auction ended - Reserve not met: %s', 'bk-auction-manager'),
                 get_bloginfo('name'),
                 $auction->post_title
             );
 
             $message = sprintf(
-                __("Hello,\n\nYour auction '%s' has ended, but the reserve price was not met.\n\nFinal Bid: %s\nReserve Price: %s\n\nThank you!", 'wp-community-auction-manager'),
+                __("Hello,\n\nYour auction '%s' has ended, but the reserve price was not met.\n\nFinal Bid: %s\nReserve Price: %s\n\nThank you!", 'bk-auction-manager'),
                 $auction->post_title,
-                wcam_format_price($current_bid),
-                wcam_format_price($reserve_price)
+                bk_auction_format_price($current_bid),
+                bk_auction_format_price($reserve_price)
             );
 
             wp_mail($owner_email, $subject, $message);
@@ -194,13 +194,13 @@ class WCAM_Notifications {
             // No bids
             $owner_email = get_the_author_meta('user_email', $auction->post_author);
 
-            $subject = sprintf(__('[%s] Auction ended - No bids: %s', 'wp-community-auction-manager'),
+            $subject = sprintf(__('[%s] Auction ended - No bids: %s', 'bk-auction-manager'),
                 get_bloginfo('name'),
                 $auction->post_title
             );
 
             $message = sprintf(
-                __("Hello,\n\nYour auction '%s' has ended with no bids.\n\nThank you!", 'wp-community-auction-manager'),
+                __("Hello,\n\nYour auction '%s' has ended with no bids.\n\nThank you!", 'bk-auction-manager'),
                 $auction->post_title
             );
 

@@ -8,26 +8,26 @@
     $(document).ready(function() {
 
         // Place Bid Handler
-        $('#wcam-bid-form').on('submit', function(e) {
+        $('#bkAuction-bid-form').on('submit', function(e) {
             e.preventDefault();
 
             var $form = $(this);
-            var $message = $('.wcam-message');
+            var $message = $('.bkAuction-message');
             var $button = $form.find('button[type="submit"]');
 
             var auctionId = $form.find('input[name="auction_id"]').val();
             var bidAmount = $form.find('input[name="bid_amount"]').val();
 
             // Disable button
-            $button.prop('disabled', true).text(wcamData.strings.processing || 'Processing...');
+            $button.prop('disabled', true).text(bkAuctionData.strings.processing || 'Processing...');
             $message.removeClass('success error').text('');
 
             $.ajax({
-                url: wcamData.ajaxUrl,
+                url: bkAuctionData.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'wcam_place_bid',
-                    nonce: wcamData.nonce,
+                    action: 'bkAuction_place_bid',
+                    nonce: bkAuctionData.nonce,
                     auction_id: auctionId,
                     bid_amount: bidAmount
                 },
@@ -36,11 +36,11 @@
                         $message.addClass('success').text(response.data.message);
 
                         // Update current bid display
-                        $('.wcam-current-bid .wcam-amount[data-auction-id="' + auctionId + '"]')
+                        $('.bkAuction-current-bid .bkAuction-amount[data-auction-id="' + auctionId + '"]')
                             .text(response.data.current_bid);
 
                         // Update bid count
-                        $('.wcam-bid-count .wcam-count').text(response.data.bid_count);
+                        $('.bkAuction-bid-count .bkAuction-count').text(response.data.bid_count);
 
                         // Reset form
                         $form[0].reset();
@@ -54,36 +54,36 @@
                     }
                 },
                 error: function() {
-                    $message.addClass('error').text(wcamData.strings.bidError);
+                    $message.addClass('error').text(bkAuctionData.strings.bidError);
                 },
                 complete: function() {
                     $button.prop('disabled', false)
-                        .text(wcamData.strings.placeBid || 'Place Bid');
+                        .text(bkAuctionData.strings.placeBid || 'Place Bid');
                 }
             });
         });
 
         // Buy Now Handler
-        $('#wcam-buy-now-btn').on('click', function(e) {
+        $('#bkAuction-buy-now-btn').on('click', function(e) {
             e.preventDefault();
 
-            if (!confirm(wcamData.strings.confirmBuyNow || 'Are you sure you want to buy this item now?')) {
+            if (!confirm(bkAuctionData.strings.confirmBuyNow || 'Are you sure you want to buy this item now?')) {
                 return;
             }
 
             var $button = $(this);
-            var $message = $('.wcam-message');
+            var $message = $('.bkAuction-message');
             var auctionId = $button.data('auction-id');
 
-            $button.prop('disabled', true).text(wcamData.strings.processing || 'Processing...');
+            $button.prop('disabled', true).text(bkAuctionData.strings.processing || 'Processing...');
             $message.removeClass('success error').text('');
 
             $.ajax({
-                url: wcamData.ajaxUrl,
+                url: bkAuctionData.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'wcam_buy_now',
-                    nonce: wcamData.nonce,
+                    action: 'bkAuction_buy_now',
+                    nonce: bkAuctionData.nonce,
                     auction_id: auctionId
                 },
                 success: function(response) {
@@ -101,28 +101,28 @@
                     } else {
                         $message.addClass('error').text(response.data.message);
                         $button.prop('disabled', false)
-                            .text(wcamData.strings.buyNow || 'Buy Now');
+                            .text(bkAuctionData.strings.buyNow || 'Buy Now');
                     }
                 },
                 error: function() {
-                    $message.addClass('error').text(wcamData.strings.bidError);
+                    $message.addClass('error').text(bkAuctionData.strings.bidError);
                     $button.prop('disabled', false)
-                        .text(wcamData.strings.buyNow || 'Buy Now');
+                        .text(bkAuctionData.strings.buyNow || 'Buy Now');
                 }
             });
         });
 
         // Update current bid periodically
         function updateCurrentBid() {
-            $('.wcam-current-bid .wcam-amount[data-auction-id]').each(function() {
+            $('.bkAuction-current-bid .bkAuction-amount[data-auction-id]').each(function() {
                 var $element = $(this);
                 var auctionId = $element.data('auction-id');
 
                 $.ajax({
-                    url: wcamData.ajaxUrl,
+                    url: bkAuctionData.ajaxUrl,
                     type: 'POST',
                     data: {
-                        action: 'wcam_get_current_bid',
+                        action: 'bkAuction_get_current_bid',
                         auction_id: auctionId
                     },
                     success: function(response) {
@@ -130,7 +130,7 @@
                             $element.text(response.data.current_bid);
 
                             // Update bid count if element exists
-                            var $bidCount = $('.wcam-bid-count .wcam-count');
+                            var $bidCount = $('.bkAuction-bid-count .bkAuction-count');
                             if ($bidCount.length) {
                                 $bidCount.text(response.data.bid_count);
                             }
@@ -142,15 +142,15 @@
 
         // Update time remaining
         function updateTimeRemaining() {
-            $('.wcam-time[data-auction-id]').each(function() {
+            $('.bkAuction-time[data-auction-id]').each(function() {
                 var $element = $(this);
                 var auctionId = $element.data('auction-id');
 
                 $.ajax({
-                    url: wcamData.ajaxUrl,
+                    url: bkAuctionData.ajaxUrl,
                     type: 'POST',
                     data: {
-                        action: 'wcam_get_time_remaining',
+                        action: 'bkAuction_get_time_remaining',
                         auction_id: auctionId
                     },
                     success: function(response) {
@@ -170,7 +170,7 @@
         }
 
         // Update every 10 seconds if on single auction page
-        if ($('.wcam-single-auction').length || $('.wcam-auction-card').length) {
+        if ($('.bkAuction-single-auction').length || $('.bkAuction-auction-card').length) {
             setInterval(function() {
                 updateCurrentBid();
                 updateTimeRemaining();
@@ -178,7 +178,7 @@
         }
 
         // Category pill filter with smooth animations
-        $('.wcam-category-pill').on('click', function(e) {
+        $('.bkAuction-category-pill').on('click', function(e) {
             e.preventDefault();
 
             var $pill = $(this);
@@ -186,16 +186,16 @@
             var currentUrl = window.location.href.split('?')[0];
 
             // Update active state with animation
-            $('.wcam-category-pill').removeClass('active');
+            $('.bkAuction-category-pill').removeClass('active');
             $pill.addClass('active');
 
             // Add loading state to grid
-            $('.wcam-auctions-grid').css('opacity', '0.5');
+            $('.bkAuction-auctions-grid').css('opacity', '0.5');
 
             // Navigate to filtered URL
             setTimeout(function() {
                 if (category) {
-                    window.location.href = currentUrl + '?wcam_category=' + category;
+                    window.location.href = currentUrl + '?bkAuction_category=' + category;
                 } else {
                     window.location.href = currentUrl;
                 }
@@ -205,28 +205,28 @@
         // Set active pill based on URL parameter
         if (window.location.search) {
             var urlParams = new URLSearchParams(window.location.search);
-            var activeCategory = urlParams.get('wcam_category');
+            var activeCategory = urlParams.get('bkAuction_category');
 
             if (activeCategory) {
-                $('.wcam-category-pill').removeClass('active');
-                $('.wcam-category-pill[data-category="' + activeCategory + '"]').addClass('active');
+                $('.bkAuction-category-pill').removeClass('active');
+                $('.bkAuction-category-pill[data-category="' + activeCategory + '"]').addClass('active');
             }
         }
 
         // Old category filter for backwards compatibility
-        $('#wcam-category-filter').on('change', function() {
+        $('#bkAuction-category-filter').on('change', function() {
             var category = $(this).val();
             var currentUrl = window.location.href.split('?')[0];
 
             if (category) {
-                window.location.href = currentUrl + '?wcam_category=' + category;
+                window.location.href = currentUrl + '?bkAuction_category=' + category;
             } else {
                 window.location.href = currentUrl;
             }
         });
 
         // Smooth scroll for dashboard navigation
-        $('.wcam-dashboard-navigation a[href^=\"#\"]').on('click', function(e) {
+        $('.bkAuction-dashboard-navigation a[href^=\"#\"]').on('click', function(e) {
             e.preventDefault();
 
             var target = $(this).attr('href');
@@ -239,33 +239,33 @@
         });
 
         // Photo Gallery Thumbnail Switcher
-        $('.wcam-gallery-thumb').on('click', function() {
+        $('.bkAuction-gallery-thumb').on('click', function() {
             var $thumb = $(this);
             var fullImage = $thumb.data('full');
             var label = $thumb.data('label');
 
             // Update active state
-            $('.wcam-gallery-thumb').removeClass('active');
+            $('.bkAuction-gallery-thumb').removeClass('active');
             $thumb.addClass('active');
 
             // Fade out current image
-            $('#wcam-main-photo').css('opacity', '0');
+            $('#bkAuction-main-photo').css('opacity', '0');
 
             // After fade, change image and fade in
             setTimeout(function() {
-                $('#wcam-main-photo')
+                $('#bkAuction-main-photo')
                     .attr('src', fullImage)
                     .css('opacity', '1');
-                $('#wcam-current-label').text(label);
+                $('#bkAuction-current-label').text(label);
             }, 300);
         });
 
         // Keyboard navigation for gallery
         $(document).on('keydown', function(e) {
-            if (!$('.wcam-photo-gallery').length) return;
+            if (!$('.bkAuction-photo-gallery').length) return;
 
-            var $thumbs = $('.wcam-gallery-thumb');
-            var $active = $('.wcam-gallery-thumb.active');
+            var $thumbs = $('.bkAuction-gallery-thumb');
+            var $active = $('.bkAuction-gallery-thumb.active');
             var currentIndex = $thumbs.index($active);
 
             if (e.keyCode === 37) { // Left arrow

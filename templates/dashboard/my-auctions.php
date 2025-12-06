@@ -22,28 +22,28 @@ if (!defined('ABSPATH')) {
         </ul>
     </div>
 
-    <h3><?php _e('My Auctions', 'wp-community-auction-manager'); ?></h3>
+    <h3><?php _e('My Auctions', 'bk-auction-manager'); ?></h3>
 
     <?php if ($auctions->have_posts()): ?>
 
         <table class="wcam-table wcam-auctions-table">
             <thead>
                 <tr>
-                    <th><?php _e('Auction', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Status', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Current Bid', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Bids', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Ends', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Actions', 'wp-community-auction-manager'); ?></th>
+                    <th><?php _e('Auction', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Status', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Current Bid', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Bids', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Ends', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Actions', 'bk-auction-manager'); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($auctions->have_posts()): $auctions->the_post();
                     $auction_id = get_the_ID();
-                    $current_bid = wcam_get_current_bid($auction_id);
-                    $bid_count = wcam_get_bid_count($auction_id);
-                    $status = get_post_meta($auction_id, '_wcam_auction_status', true);
-                    $end_date = get_post_meta($auction_id, '_wcam_end_date', true);
+                    $current_bid = bk_auction_get_current_bid($auction_id);
+                    $bid_count = bk_auction_get_bid_count($auction_id);
+                    $status = get_post_meta($auction_id, '_bk_auction_auction_status', true);
+                    $end_date = get_post_meta($auction_id, '_bk_auction_end_date', true);
                 ?>
                     <tr>
                         <td>
@@ -51,10 +51,10 @@ if (!defined('ABSPATH')) {
                         </td>
                         <td>
                             <span class="wcam-status-badge wcam-status-<?php echo esc_attr($status); ?>">
-                                <?php echo esc_html(wcam_get_status_label($auction_id)); ?>
+                                <?php echo esc_html(bk_auction_get_status_label($auction_id)); ?>
                             </span>
                         </td>
-                        <td><?php echo wcam_format_price($current_bid); ?></td>
+                        <td><?php echo bk_auction_format_price($current_bid); ?></td>
                         <td><?php echo absint($bid_count); ?></td>
                         <td>
                             <?php
@@ -67,10 +67,10 @@ if (!defined('ABSPATH')) {
                         </td>
                         <td>
                             <a href="<?php the_permalink(); ?>" class="wcam-btn wcam-btn-small">
-                                <?php _e('View', 'wp-community-auction-manager'); ?>
+                                <?php _e('View', 'bk-auction-manager'); ?>
                             </a>
                             <a href="<?php echo get_edit_post_link(); ?>" class="wcam-btn wcam-btn-small">
-                                <?php _e('Edit', 'wp-community-auction-manager'); ?>
+                                <?php _e('Edit', 'bk-auction-manager'); ?>
                             </a>
                         </td>
                     </tr>
@@ -80,7 +80,7 @@ if (!defined('ABSPATH')) {
 
     <?php else: ?>
 
-        <p><?php _e('You have not created any auctions yet.', 'wp-community-auction-manager'); ?></p>
+        <p><?php _e('You have not created any auctions yet.', 'bk-auction-manager'); ?></p>
 
     <?php endif; ?>
 </div>

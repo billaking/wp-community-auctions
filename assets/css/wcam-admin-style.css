@@ -1,82 +1,88 @@
 /**
  * WP Community Auction Manager - Admin Styles
+ * Using WP Community Design System
  */
 
 /* Meta Box Styles */
-.wcam-bidding-info {
+.bk-auction-bidding-info {
     line-height: 2;
 }
 
-.wcam-bidding-info p {
+.bk-auction-bidding-info p {
     margin: 8px 0;
 }
 
-.wcam-datepicker {
+.bk-auction-datepicker {
     width: 100%;
 }
 
 /* Admin Tables */
-.wp-list-table .wcam-status-badge {
+.wp-list-table .bk-auction-status-badge {
     display: inline-block;
     padding: 4px 10px;
-    border-radius: 3px;
+    border-radius: 4px;
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
+    border: 1px solid;
 }
 
-.wp-list-table .wcam-status-upcoming {
-    background: #f0f6fc;
-    color: #0a4b78;
+.wp-list-table .bk-auction-status-upcoming {
+    background: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
 }
 
-.wp-list-table .wcam-status-active {
-    background: #edfaef;
-    color: #0f6648;
+.wp-list-table .bk-auction-status-active {
+    background: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
 }
 
-.wp-list-table .wcam-status-ended {
-    background: #f0f0f1;
-    color: #3c434a;
+.wp-list-table .bk-auction-status-ended {
+    background: #e2e3e5;
+    color: #383d41;
+    border-color: #d6d8db;
 }
 
-.wp-list-table .wcam-status-cancelled {
-    background: #fcf0f1;
-    color: #8a2424;
+.wp-list-table .bk-auction-status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
 }
 
 /* Settings Page */
-.wcam-settings-page .form-table th {
+.bk-auction-settings-page .form-table th {
     padding-left: 0;
 }
 
 /* Photo Gallery Admin Styles */
-.wcam-photo-gallery-admin {
+.bk-auction-photo-gallery-admin {
     padding: 15px 0;
 }
 
-.wcam-gallery-grid {
+.bk-auction-gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     margin-top: 15px;
 }
 
-.wcam-gallery-item {
-    background: #f9f9f9;
-    border: 2px solid #ddd;
+.bk-auction-gallery-item {
+    background: #fff;
+    border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
     text-align: center;
     transition: all 0.3s ease;
 }
 
-.wcam-gallery-item:hover {
-    border-color: #6366f1;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+.bk-auction-gallery-item:hover {
+    border-color: #2271b1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.wcam-gallery-label {
+.bk-auction-gallery-label {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +96,7 @@
     font-size: 16px;
 }
 
-.wcam-gallery-preview {
+.bk-auction-gallery-preview {
     width: 100%;
     height: 180px;
     background: #fff;
@@ -108,9 +114,9 @@
     background-repeat: no-repeat;
 }
 
-.wcam-gallery-preview:hover {
-    border-color: #6366f1;
-    background-color: #fafafa;
+.bk-auction-gallery-preview:hover {
+    border-color: #2271b1;
+    background-color: #f5f5f5;
 }
 
 .placeholder-icon {
@@ -126,55 +132,377 @@
     font-weight: 500;
 }
 
-.wcam-gallery-buttons {
+.bk-auction-gallery-buttons {
     display: flex;
     gap: 8px;
     justify-content: center;
 }
 
-.wcam-gallery-buttons .button {
+.bk-auction-gallery-buttons .button {
     flex: 1;
     font-size: 12px;
     padding: 6px 12px;
     height: auto;
 }
 
-.wcam-upload-photo {
-    background: #6366f1;
+.bk-auction-upload-photo {
+    background: #2271b1;
     color: white;
-    border-color: #6366f1;
+    border-color: #2271b1;
 }
 
-.wcam-upload-photo:hover {
-    background: #4f46e5;
-    border-color: #4f46e5;
+.bk-auction-upload-photo:hover {
+    background: #135e96;
+    border-color: #135e96;
     color: white;
 }
 
-.wcam-remove-photo {
-    background: #ef4444;
+.bk-auction-remove-photo {
+    background: #f44336;
     color: white;
-    border-color: #ef4444;
+    border-color: #f44336;
 }
 
-.wcam-remove-photo:hover {
-    background: #dc2626;
-    border-color: #dc2626;
+.bk-auction-remove-photo:hover {
+    background: #da190b;
+    border-color: #da190b;
     color: white;
 }
 
 @media screen and (max-width: 782px) {
-    .wcam-gallery-grid {
+    .bk-auction-gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 15px;
     }
 
-    .wcam-gallery-preview {
+    .bk-auction-gallery-preview {
         height: 150px;
     }
 }
 
 /* Bid Details in Admin */
-.wcam-admin-bids-table {
+.bk-auction-admin-bids-table {
     margin-top: 20px;
+}
+
+/* ===================================
+   DASHBOARD STATS (WP COMMUNITY DESIGN SYSTEM)
+   =================================== */
+
+.bk-auction-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.bk-auction-stat-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: box-shadow 0.3s;
+}
+
+.bk-auction-stat-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.bk-auction-stat-icon {
+    font-size: 40px;
+    color: #2271b1;
+}
+
+.bk-auction-stat-active .bk-auction-stat-icon {
+    color: #4caf50;
+}
+
+.bk-auction-stat-ended .bk-auction-stat-icon {
+    color: #f44336;
+}
+
+.bk-auction-stat-bids .bk-auction-stat-icon {
+    color: #2196f3;
+}
+
+.bk-auction-stat-content h3 {
+    margin: 0 0 5px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.bk-auction-stat-content p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Dashboard Sections */
+.bk-auction-dashboard-section {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 24px 0;
+}
+
+.bk-auction-dashboard-section h2 {
+    margin-top: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1d2327;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.bk-auction-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.bk-auction-btn:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-decoration: none;
+}
+
+.bk-auction-btn-primary {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.bk-auction-btn-primary:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+
+.bk-auction-btn-success {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
+}
+
+.bk-auction-btn-success:hover {
+    background: #45a049;
+    border-color: #45a049;
+}
+
+.bk-auction-btn-danger {
+    background: #f44336;
+    border-color: #f44336;
+    color: #fff;
+}
+
+.bk-auction-btn-danger:hover {
+    background: #da190b;
+    border-color: #da190b;
+}
+
+/* Messages */
+.bk-auction-message {
+    padding: 12px 15px;
+    border-radius: 4px;
+    margin: 15px 0;
+    border-left: 4px solid;
+}
+
+.bk-auction-message-success {
+    background: #d4edda;
+    border-color: #4caf50;
+    color: #155724;
+}
+
+.bk-auction-message-error {
+    background: #f8d7da;
+    border-color: #f44336;
+    color: #721c24;
+}
+
+.bk-auction-message-info {
+    background: #d1ecf1;
+    border-color: #2196f3;
+    color: #0c5460;
+}
+
+/* Tables */
+.bk-auction-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.bk-auction-table thead {
+    background: #f5f5f5;
+}
+
+.bk-auction-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #23282d;
+    border-bottom: 2px solid #ddd;
+}
+
+.bk-auction-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.bk-auction-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.bk-auction-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Form Styles */
+.bk-auction-form-row {
+    margin-bottom: 20px;
+}
+
+.bk-auction-form-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #23282d;
+}
+
+.bk-auction-form-row input[type="text"],
+.bk-auction-form-row input[type="number"],
+.bk-auction-form-row input[type="date"],
+.bk-auction-form-row input[type="email"],
+.bk-auction-form-row textarea,
+.bk-auction-form-row select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.bk-auction-form-row input:focus,
+.bk-auction-form-row textarea:focus,
+.bk-auction-form-row select:focus {
+    border-color: #2271b1;
+    outline: none;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+/* Status Badges for Bids */
+.bk-auction-status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.bk-auction-status-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.bk-auction-status-winning {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.bk-auction-status-outbid {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Amount Colors */
+.bk-auction-amount-income {
+    color: #4caf50;
+    font-weight: 600;
+}
+
+.bk-auction-amount-expense {
+    color: #f44336;
+    font-weight: 600;
+}
+
+.bk-auction-amount-balance {
+    color: #2196f3;
+    font-weight: 600;
+}
+
+/* Pagination */
+.bk-auction-pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.bk-auction-pagination .page-numbers {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 4px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #2271b1;
+    transition: all 0.2s;
+}
+
+.bk-auction-pagination .page-numbers:hover {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+
+.bk-auction-pagination .page-numbers.current {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+
+/* Messages */
+.bk-auction-message {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.bk-auction-message-success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 4px solid #4caf50;
+}
+
+.bk-auction-message-error {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #f44336;
+}
+
+.bk-auction-message-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #2196f3;
+}
+
+.bk-auction-message p {
+    margin: 0;
 }

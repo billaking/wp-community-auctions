@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 $user_id = get_current_user_id();
-$dashboard = WCAM_User_Dashboard::get_instance();
+$dashboard = BK_AUCTION_User_Dashboard::get_instance();
 $stats = $dashboard->get_user_stats($user_id);
 ?>
 
@@ -27,55 +27,55 @@ $stats = $dashboard->get_user_stats($user_id);
         </ul>
     </div>
 
-    <h2><?php printf(__('Welcome, %s!', 'wp-community-auction-manager'), wp_get_current_user()->display_name); ?></h2>
+    <h2><?php printf(__('Welcome, %s!', 'bk-auction-manager'), wp_get_current_user()->display_name); ?></h2>
 
     <div class="wcam-dashboard-stats">
         <div class="wcam-stat-card">
             <div class="wcam-stat-value"><?php echo absint($stats['total_auctions']); ?></div>
-            <div class="wcam-stat-label"><?php _e('Total Auctions', 'wp-community-auction-manager'); ?></div>
+            <div class="wcam-stat-label"><?php _e('Total Auctions', 'bk-auction-manager'); ?></div>
         </div>
 
         <div class="wcam-stat-card">
             <div class="wcam-stat-value"><?php echo absint($stats['active_auctions']); ?></div>
-            <div class="wcam-stat-label"><?php _e('Active Auctions', 'wp-community-auction-manager'); ?></div>
+            <div class="wcam-stat-label"><?php _e('Active Auctions', 'bk-auction-manager'); ?></div>
         </div>
 
         <div class="wcam-stat-card">
             <div class="wcam-stat-value"><?php echo absint($stats['total_bids']); ?></div>
-            <div class="wcam-stat-label"><?php _e('Bids Placed', 'wp-community-auction-manager'); ?></div>
+            <div class="wcam-stat-label"><?php _e('Bids Placed', 'bk-auction-manager'); ?></div>
         </div>
 
         <div class="wcam-stat-card">
             <div class="wcam-stat-value"><?php echo absint($stats['winning_auctions']); ?></div>
-            <div class="wcam-stat-label"><?php _e('Winning', 'wp-community-auction-manager'); ?></div>
+            <div class="wcam-stat-label"><?php _e('Winning', 'bk-auction-manager'); ?></div>
         </div>
     </div>
 
     <div class="wcam-dashboard-navigation">
         <a href="#my-auctions" class="wcam-btn wcam-btn-primary">
-            <?php _e('My Auctions', 'wp-community-auction-manager'); ?>
+            <?php _e('My Auctions', 'bk-auction-manager'); ?>
         </a>
         <a href="#my-bids" class="wcam-btn wcam-btn-secondary">
-            <?php _e('My Bids', 'wp-community-auction-manager'); ?>
+            <?php _e('My Bids', 'bk-auction-manager'); ?>
         </a>
-        <?php if (get_option('wcam_allow_frontend_submission', true)): ?>
+        <?php if (get_option('bk_auction_allow_frontend_submission', true)): ?>
             <a href="#create-auction" class="wcam-btn wcam-btn-success">
-                <?php _e('Create Auction', 'wp-community-auction-manager'); ?>
+                <?php _e('Create Auction', 'bk-auction-manager'); ?>
             </a>
         <?php endif; ?>
     </div>
 
     <div id="my-auctions" class="wcam-dashboard-section">
-        <?php echo do_shortcode('[wcam_my_auctions]'); ?>
+        <?php echo do_shortcode('[bk_auction_my_auctions]'); ?>
     </div>
 
     <div id="my-bids" class="wcam-dashboard-section">
-        <?php echo do_shortcode('[wcam_my_bids]'); ?>
+        <?php echo do_shortcode('[bk_auction_my_bids]'); ?>
     </div>
 
-    <?php if (get_option('wcam_allow_frontend_submission', true)): ?>
+    <?php if (get_option('bk_auction_allow_frontend_submission', true)): ?>
         <div id="create-auction" class="wcam-dashboard-section">
-            <?php echo do_shortcode('[wcam_create_auction]'); ?>
+            <?php echo do_shortcode('[bk_auction_create_auction]'); ?>
         </div>
     <?php endif; ?>
 

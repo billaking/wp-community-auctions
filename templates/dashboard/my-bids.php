@@ -22,19 +22,19 @@ if (!defined('ABSPATH')) {
         </ul>
     </div>
 
-    <h3><?php _e('My Bids', 'wp-community-auction-manager'); ?></h3>
+    <h3><?php _e('My Bids', 'bk-auction-manager'); ?></h3>
 
     <?php if ($bids): ?>
 
         <table class="wcam-table wcam-bids-table">
             <thead>
                 <tr>
-                    <th><?php _e('Auction', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('My Bid', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Current Bid', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Status', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Time', 'wp-community-auction-manager'); ?></th>
-                    <th><?php _e('Actions', 'wp-community-auction-manager'); ?></th>
+                    <th><?php _e('Auction', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('My Bid', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Current Bid', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Status', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Time', 'bk-auction-manager'); ?></th>
+                    <th><?php _e('Actions', 'bk-auction-manager'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -47,9 +47,9 @@ if (!defined('ABSPATH')) {
                     }
                     $displayed_auctions[] = $bid->auction_id;
 
-                    $current_bid = wcam_get_current_bid($bid->auction_id);
-                    $is_winning = wcam_is_user_winning($bid->auction_id, $user_id);
-                    $auction_status = get_post_meta($bid->auction_id, '_wcam_auction_status', true);
+                    $current_bid = bk_auction_get_current_bid($bid->auction_id);
+                    $is_winning = bk_auction_is_user_winning($bid->auction_id, $user_id);
+                    $auction_status = get_post_meta($bid->auction_id, '_bk_auction_auction_status', true);
                 ?>
                     <tr class="<?php echo $is_winning ? 'wcam-winning' : ''; ?>">
                         <td>
@@ -57,23 +57,23 @@ if (!defined('ABSPATH')) {
                                 <?php echo esc_html($bid->post_title); ?>
                             </a>
                         </td>
-                        <td><?php echo wcam_format_price($bid->bid_amount); ?></td>
-                        <td><?php echo wcam_format_price($current_bid); ?></td>
+                        <td><?php echo bk_auction_format_price($bid->bid_amount); ?></td>
+                        <td><?php echo bk_auction_format_price($current_bid); ?></td>
                         <td>
                             <?php if ($is_winning): ?>
-                                <span class="wcam-badge wcam-badge-success"><?php _e('Winning', 'wp-community-auction-manager'); ?></span>
+                                <span class="wcam-badge wcam-badge-success"><?php _e('Winning', 'bk-auction-manager'); ?></span>
                             <?php elseif ($auction_status === 'ended'): ?>
-                                <span class="wcam-badge wcam-badge-default"><?php _e('Ended', 'wp-community-auction-manager'); ?></span>
+                                <span class="wcam-badge wcam-badge-default"><?php _e('Ended', 'bk-auction-manager'); ?></span>
                             <?php else: ?>
-                                <span class="wcam-badge wcam-badge-warning"><?php _e('Outbid', 'wp-community-auction-manager'); ?></span>
+                                <span class="wcam-badge wcam-badge-warning"><?php _e('Outbid', 'bk-auction-manager'); ?></span>
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?php echo human_time_diff(strtotime($bid->bid_time), current_time('timestamp')) . ' ' . __('ago', 'wp-community-auction-manager'); ?>
+                            <?php echo human_time_diff(strtotime($bid->bid_time), current_time('timestamp')) . ' ' . __('ago', 'bk-auction-manager'); ?>
                         </td>
                         <td>
                             <a href="<?php echo get_permalink($bid->auction_id); ?>" class="wcam-btn wcam-btn-small">
-                                <?php _e('View Auction', 'wp-community-auction-manager'); ?>
+                                <?php _e('View Auction', 'bk-auction-manager'); ?>
                             </a>
                         </td>
                     </tr>
@@ -83,7 +83,7 @@ if (!defined('ABSPATH')) {
 
     <?php else: ?>
 
-        <p><?php _e('You have not placed any bids yet.', 'wp-community-auction-manager'); ?></p>
+        <p><?php _e('You have not placed any bids yet.', 'bk-auction-manager'); ?></p>
 
     <?php endif; ?>
 </div>

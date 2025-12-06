@@ -8,20 +8,20 @@ if (!defined('ABSPATH')) {
 }
 
 $auction_id = $auction->ID;
-$current_bid = wcam_get_current_bid($auction_id);
-$bid_count = wcam_get_bid_count($auction_id);
-$time_remaining = wcam_get_time_remaining($auction_id);
-$is_active = wcam_is_auction_active($auction_id);
-$buy_now_price = get_post_meta($auction_id, '_wcam_buy_now_price', true);
-$minimum_bid = wcam_get_minimum_bid($auction_id);
+$current_bid = bk_auction_get_current_bid($auction_id);
+$bid_count = bk_auction_get_bid_count($auction_id);
+$time_remaining = bk_auction_get_time_remaining($auction_id);
+$is_active = bk_auction_is_auction_active($auction_id);
+$buy_now_price = get_post_meta($auction_id, '_bk_auction_buy_now_price', true);
+$minimum_bid = bk_auction_get_minimum_bid($auction_id);
 ?>
 
 <div class="wcam-single-auction-content">
 
     <div class="wcam-auction-header">
         <h2><?php echo esc_html($auction->post_title); ?></h2>
-        <span class="wcam-status wcam-status-<?php echo esc_attr(get_post_meta($auction_id, '_wcam_auction_status', true)); ?>">
-            <?php echo esc_html(wcam_get_status_label($auction_id)); ?>
+        <span class="wcam-status wcam-status-<?php echo esc_attr(get_post_meta($auction_id, '_bk_auction_auction_status', true)); ?>">
+            <?php echo esc_html(bk_auction_get_status_label($auction_id)); ?>
         </span>
     </div>
 
@@ -32,7 +32,7 @@ $minimum_bid = wcam_get_minimum_bid($auction_id);
                 <?php echo get_the_post_thumbnail($auction_id, 'large'); ?>
             <?php else: ?>
                 <div class="wcam-no-image">
-                    <p><?php _e('No image available', 'wp-community-auction-manager'); ?></p>
+                    <p><?php _e('No image available', 'bk-auction-manager'); ?></p>
                 </div>
             <?php endif; ?>
         </div>
@@ -41,19 +41,19 @@ $minimum_bid = wcam_get_minimum_bid($auction_id);
 
             <div class="wcam-bid-info">
                 <div class="wcam-current-bid">
-                    <span class="wcam-label"><?php _e('Current Bid:', 'wp-community-auction-manager'); ?></span>
+                    <span class="wcam-label"><?php _e('Current Bid:', 'bk-auction-manager'); ?></span>
                     <span class="wcam-amount" data-auction-id="<?php echo esc_attr($auction_id); ?>">
-                        <?php echo wcam_format_price($current_bid); ?>
+                        <?php echo bk_auction_format_price($current_bid); ?>
                     </span>
                 </div>
 
                 <div class="wcam-bid-count">
-                    <span class="wcam-label"><?php _e('Total Bids:', 'wp-community-auction-manager'); ?></span>
+                    <span class="wcam-label"><?php _e('Total Bids:', 'bk-auction-manager'); ?></span>
                     <span class="wcam-count"><?php echo absint($bid_count); ?></span>
                 </div>
 
                 <div class="wcam-time-remaining">
-                    <span class="wcam-label"><?php _e('Time Remaining:', 'wp-community-auction-manager'); ?></span>
+                    <span class="wcam-label"><?php _e('Time Remaining:', 'bk-auction-manager'); ?></span>
                     <span class="wcam-time" data-auction-id="<?php echo esc_attr($auction_id); ?>">
                         <?php echo esc_html($time_remaining['time']); ?>
                     </span>
@@ -65,7 +65,7 @@ $minimum_bid = wcam_get_minimum_bid($auction_id);
             </div>
 
             <a href="<?php echo get_permalink($auction_id); ?>" class="wcam-btn wcam-btn-primary wcam-btn-block">
-                <?php _e('View Full Auction', 'wp-community-auction-manager'); ?>
+                <?php _e('View Full Auction', 'bk-auction-manager'); ?>
             </a>
 
         </div>

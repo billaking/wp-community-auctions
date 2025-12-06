@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class WCAM_Bidding {
+class BK_AUCTION_Bidding {
 
     private static $instance = null;
 
@@ -30,18 +30,18 @@ class WCAM_Bidding {
 
         // Validate auction
         if (!$this->validate_auction($auction_id)) {
-            return new WP_Error('invalid_auction', __('Invalid auction.', 'wp-community-auction-manager'));
+            return new WP_Error('invalid_auction', __('Invalid auction.', 'bk-auction-manager'));
         }
 
         // Check if auction is active
-        $status = get_post_meta($auction_id, '_wcam_auction_status', true);
+        $status = get_post_meta($auction_id, '_bk_auction_auction_status', true);
         if ($status !== 'active') {
-            return new WP_Error('auction_not_active', __('Auction is not active.', 'wp-community-auction-manager'));
+            return new WP_Error('auction_not_active', __('Auction is not active.', 'bk-auction-manager'));
         }
 
         // Check if auction has ended
         if ($this->has_auction_ended($auction_id)) {
-            return new WP_Error('auction_ended', __('Auction has ended.', 'wp-community-auction-manager'));
+            return new WP_Error('auction_ended', __('Auction has ended.', 'bk-auction-manager'));
         }
 
         // Validate bid amount
@@ -53,11 +53,11 @@ class WCAM_Bidding {
         // Check if user is not the owner
         $auction = get_post($auction_id);
         if ($auction->post_author == $user_id) {
-            return new WP_Error('own_auction', __('You cannot bid on your own auction.', 'wp-community-auction-manager'));
+            return new WP_Error('own_auction', __('You cannot bid on your own auction.', 'bk-auction-manager'));
         }
 
         // Insert bid
-        $table_name = $wpdb->prefix . 'wcam_bids';
+        $table_name = $wpdb->prefix . 'bk_auction_bids';
         $result = $wpdb->insert(
             $table_name,
             array(
@@ -72,17 +72,17 @@ class WCAM_Bidding {
         );
 
         if ($result === false) {
-            return new WP_Error('bid_failed', __('Failed to place bid.', 'wp-community-auction-manager'));
+            return new WP_Error('bid_failed', __('Failed to place bid.', 'bk-auction-manager'));
         }
 
         $bid_id = $wpdb->insert_id;
 
         // Update auction meta
-        update_post_meta($auction_id, '_wcam_current_bid', $bid_amount);
-        update_post_meta($auction_id, '_wcam_highest_bidder', $user_id);
+        update_post_meta($auction_id, '_bk_auction_current_bid', $bid_amount);
+        update_post_meta($auction_id, '_bk_auction_highest_bidder', $user_id);
 
         // Send notifications
-        do_action('wcam_bid_placed', $bid_id, $auction_id, $user_id, $bid_amount);
+        do_action('bk_auction_bid_placed', $bid_id, $auction_id, $user_id, $bid_amount);
 
         return $bid_id;
     }
@@ -91,10 +91,10 @@ class WCAM_Bidding {
      * Buy now
      */
     public function buy_now($auction_id, $user_id) {
-        $buy_now_price = get_post_meta($auction_id, '_wcam_buy_now_price', true);
+        $buy_now_price = get_post_meta($auction_id, '_bk_auction_buy_now_price', true);
 
         if (empty($buy_now_price) || $buy_now_price <= 0) {
-            return new WP_Error('no_buy_now', __('Buy now is not available for this auction.', 'wp-community-auction-manager'));
+            return new WP_Error('no_buy_now', __('Buy now is not available for this auction.', 'bk-auction-manager'));
         }
 
         // Place bid at buy now price
@@ -102,10 +102,10 @@ class WCAM_Bidding {
 
         if (!is_wp_error($result)) {
             // End auction immediately
-            update_post_meta($auction_id, '_wcam_auction_status', 'ended');
-            update_post_meta($auction_id, '_wcam_end_date', current_time('mysql'));
+            update_post_meta($auction_id, '_bk_auction_auction_status', 'ended');
+            update_post_meta($auction_id, '_bk_auction_end_date', current_time('mysql'));
 
-            do_action('wcam_buy_now_completed', $auction_id, $user_id, $buy_now_price);
+            do_action('bk_auction_buy_now_completed', $auction_id, $user_id, $buy_now_price);
         }
 
         return $result;
@@ -116,16 +116,16 @@ class WCAM_Bidding {
      */
     private function validate_auction($auction_id) {
         $post = get_post($auction_id);
-        return $post && $post->post_type === 'wcam_auction' && $post->post_status === 'publish';
+        return $post && $post->post_type === 'bk_auction_auction' && $post->post_status === 'publish';
     }
 
     /**
      * Validate bid amount
      */
     private function validate_bid_amount($auction_id, $bid_amount) {
-        $current_bid = wcam_get_current_bid($auction_id);
-        $starting_price = get_post_meta($auction_id, '_wcam_starting_price', true);
-        $bid_increment = get_post_meta($auction_id, '_wcam_bid_increment', true);
+        $current_bid = bk_auction_get_current_bid($auction_id);
+        $starting_price = get_post_meta($auction_id, '_bk_auction_starting_price', true);
+        $bid_increment = get_post_meta($auction_id, '_bk_auction_bid_increment', true);
 
         if (empty($bid_increment)) {
             $bid_increment = 1;
@@ -134,7 +134,7 @@ class WCAM_Bidding {
         $minimum_bid = $current_bid > 0 ? $current_bid + $bid_increment : $starting_price;
 
         if ($bid_amount < $minimum_bid) {
-            return new WP_Error('bid_too_low', sprintf(__('Bid must be at least %s.', 'wp-community-auction-manager'), wcam_format_price($minimum_bid)));
+            return new WP_Error('bid_too_low', sprintf(__('Bid must be at least %s.', 'bk-auction-manager'), bk_auction_format_price($minimum_bid)));
         }
 
         return true;
@@ -144,7 +144,7 @@ class WCAM_Bidding {
      * Check if auction has ended
      */
     private function has_auction_ended($auction_id) {
-        $end_date = get_post_meta($auction_id, '_wcam_end_date', true);
+        $end_date = get_post_meta($auction_id, '_bk_auction_end_date', true);
 
         if (empty($end_date)) {
             return false;
@@ -173,7 +173,7 @@ class WCAM_Bidding {
     public function get_auction_bids($auction_id, $limit = 10) {
         global $wpdb;
 
-        $table_name = $wpdb->prefix . 'wcam_bids';
+        $table_name = $wpdb->prefix . 'bk_auction_bids';
 
         $bids = $wpdb->get_results($wpdb->prepare(
             "SELECT * FROM $table_name WHERE auction_id = %d ORDER BY bid_time DESC LIMIT %d",
@@ -190,7 +190,7 @@ class WCAM_Bidding {
     public function get_user_bids($user_id, $limit = 20) {
         global $wpdb;
 
-        $table_name = $wpdb->prefix . 'wcam_bids';
+        $table_name = $wpdb->prefix . 'bk_auction_bids';
 
         $bids = $wpdb->get_results($wpdb->prepare(
             "SELECT b.*, p.post_title
@@ -215,10 +215,10 @@ class WCAM_Bidding {
         $query = $wpdb->prepare(
             "SELECT DISTINCT p.ID, p.post_title, pm.meta_value as current_bid
              FROM {$wpdb->posts} p
-             INNER JOIN {$wpdb->postmeta} pm1 ON p.ID = pm1.post_id AND pm1.meta_key = '_wcam_highest_bidder'
-             INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = '_wcam_current_bid'
+             INNER JOIN {$wpdb->postmeta} pm1 ON p.ID = pm1.post_id AND pm1.meta_key = '_bk_auction_highest_bidder'
+             INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = '_bk_auction_current_bid'
              WHERE pm1.meta_value = %d
-             AND p.post_type = 'wcam_auction'
+             AND p.post_type = 'bk_auction_auction'
              AND p.post_status = 'publish'
              ORDER BY p.post_date DESC",
             $user_id
@@ -234,10 +234,10 @@ class WCAM_Bidding {
         global $wpdb;
 
         if (!current_user_can('manage_options')) {
-            return new WP_Error('permission_denied', __('Permission denied.', 'wp-community-auction-manager'));
+            return new WP_Error('permission_denied', __('Permission denied.', 'bk-auction-manager'));
         }
 
-        $table_name = $wpdb->prefix . 'wcam_bids';
+        $table_name = $wpdb->prefix . 'bk_auction_bids';
 
         $result = $wpdb->update(
             $table_name,
@@ -264,7 +264,7 @@ class WCAM_Bidding {
     private function recalculate_highest_bid($auction_id) {
         global $wpdb;
 
-        $table_name = $wpdb->prefix . 'wcam_bids';
+        $table_name = $wpdb->prefix . 'bk_auction_bids';
 
         $highest_bid = $wpdb->get_row($wpdb->prepare(
             "SELECT bid_amount, user_id FROM $table_name
@@ -274,11 +274,11 @@ class WCAM_Bidding {
         ));
 
         if ($highest_bid) {
-            update_post_meta($auction_id, '_wcam_current_bid', $highest_bid->bid_amount);
-            update_post_meta($auction_id, '_wcam_highest_bidder', $highest_bid->user_id);
+            update_post_meta($auction_id, '_bk_auction_current_bid', $highest_bid->bid_amount);
+            update_post_meta($auction_id, '_bk_auction_highest_bidder', $highest_bid->user_id);
         } else {
-            delete_post_meta($auction_id, '_wcam_current_bid');
-            delete_post_meta($auction_id, '_wcam_highest_bidder');
+            delete_post_meta($auction_id, '_bk_auction_current_bid');
+            delete_post_meta($auction_id, '_bk_auction_highest_bidder');
         }
     }
 }

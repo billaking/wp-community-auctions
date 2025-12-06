@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class WCAM_Templates {
+class BK_AUCTION_Templates {
 
     private static $instance = null;
 
@@ -20,22 +20,22 @@ class WCAM_Templates {
 
     private function __construct() {
         add_filter('template_include', array($this, 'template_loader'));
-        add_shortcode('wcam_auctions', array($this, 'auctions_shortcode'));
-        add_shortcode('wcam_auction', array($this, 'single_auction_shortcode'));
+        add_shortcode('bk_auction_auctions', array($this, 'auctions_shortcode'));
+        add_shortcode('bk_auction_auction', array($this, 'single_auction_shortcode'));
     }
 
     /**
      * Template loader
      */
     public function template_loader($template) {
-        if (is_singular('wcam_auction')) {
+        if (is_singular('bk_auction_auction')) {
             $custom_template = $this->locate_template('single-auction.php');
             if ($custom_template) {
                 return $custom_template;
             }
         }
 
-        if (is_post_type_archive('wcam_auction')) {
+        if (is_post_type_archive('bk_auction_auction')) {
             $custom_template = $this->locate_template('archive-auction.php');
             if ($custom_template) {
                 return $custom_template;
@@ -60,7 +60,7 @@ class WCAM_Templates {
         }
 
         // Fall back to plugin template
-        $plugin_template = WCAM_PLUGIN_DIR . 'templates/' . $template_name;
+        $plugin_template = BK_AUCTION_PLUGIN_DIR . 'templates/' . $template_name;
         if (file_exists($plugin_template)) {
             return $plugin_template;
         }
@@ -81,7 +81,7 @@ class WCAM_Templates {
         ), $atts);
 
         $args = array(
-            'post_type' => 'wcam_auction',
+            'post_type' => 'bk_auction_auction',
             'posts_per_page' => absint($atts['number']),
             'orderby' => $atts['orderby'],
             'order' => $atts['order'],
@@ -90,7 +90,7 @@ class WCAM_Templates {
         if ($atts['status']) {
             $args['meta_query'] = array(
                 array(
-                    'key' => '_wcam_auction_status',
+                    'key' => '_bk_auction_auction_status',
                     'value' => $atts['status'],
                 ),
             );
@@ -99,7 +99,7 @@ class WCAM_Templates {
         if ($atts['category']) {
             $args['tax_query'] = array(
                 array(
-                    'taxonomy' => 'wcam_category',
+                    'taxonomy' => 'bk_auction_category',
                     'field' => 'slug',
                     'terms' => $atts['category'],
                 ),
@@ -109,7 +109,7 @@ class WCAM_Templates {
         $auctions = new WP_Query($args);
 
         ob_start();
-        include WCAM_PLUGIN_DIR . 'templates/auction-listing.php';
+        include BK_AUCTION_PLUGIN_DIR . 'templates/auction-listing.php';
         wp_reset_postdata();
         return ob_get_clean();
     }
@@ -128,12 +128,12 @@ class WCAM_Templates {
 
         $auction = get_post($atts['id']);
 
-        if (!$auction || $auction->post_type !== 'wcam_auction') {
+        if (!$auction || $auction->post_type !== 'bk_auction_auction') {
             return '';
         }
 
         ob_start();
-        include WCAM_PLUGIN_DIR . 'templates/single-auction-content.php';
+        include BK_AUCTION_PLUGIN_DIR . 'templates/single-auction-content.php';
         return ob_get_clean();
     }
 }
