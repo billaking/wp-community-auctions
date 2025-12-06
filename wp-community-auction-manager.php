@@ -102,6 +102,11 @@ class WP_Community_Auction_Manager {
      * Enqueue frontend scripts and styles
      */
     public function enqueue_scripts() {
+        // Only load on auction pages
+        if (!is_singular('auction') && !is_post_type_archive('auction') && !is_page()) {
+            return;
+        }
+
         wp_enqueue_style('wcam-style', WCAM_PLUGIN_URL . 'assets/css/wcam-style.css', array(), WCAM_VERSION);
         wp_enqueue_script('wcam-script', WCAM_PLUGIN_URL . 'assets/js/wcam-script.js', array('jquery'), WCAM_VERSION, true);
 
@@ -121,9 +126,15 @@ class WP_Community_Auction_Manager {
      * Enqueue admin scripts and styles
      */
     public function admin_enqueue_scripts($hook) {
+        // Only load on auction post type pages
+        global $post_type;
+        if ('auction' !== $post_type && 'toplevel_page_wcam-settings' !== $hook) {
+            return;
+        }
+
         wp_enqueue_style('wcam-admin-style', WCAM_PLUGIN_URL . 'assets/css/wcam-admin-style.css', array(), WCAM_VERSION);
         wp_enqueue_script('wcam-admin-script', WCAM_PLUGIN_URL . 'assets/js/wcam-admin-script.js', array('jquery', 'jquery-ui-datepicker'), WCAM_VERSION, true);
-        wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+        wp_enqueue_style('jquery-ui', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(), '1.12.1');
     }
 
     /**
