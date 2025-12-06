@@ -1,0 +1,1324 @@
+/**
+ * WP Community Auction Manager - Modern Frontend Styles
+ */
+
+/* CSS Variables for Easy Customization */
+:root {
+    --wcam-primary: #6366f1;
+    --wcam-primary-dark: #4f46e5;
+    --wcam-primary-light: #818cf8;
+    --wcam-success: #10b981;
+    --wcam-success-dark: #059669;
+    --wcam-warning: #f59e0b;
+    --wcam-danger: #ef4444;
+    --wcam-danger-dark: #dc2626;
+    --wcam-text: #1f2937;
+    --wcam-text-light: #6b7280;
+    --wcam-border: #e5e7eb;
+    --wcam-bg: #ffffff;
+    --wcam-bg-light: #f9fafb;
+    --wcam-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --wcam-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --wcam-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --wcam-radius: 12px;
+    --wcam-radius-sm: 8px;
+}
+
+/* Reset and Base Styles */
+.wcam-auctions-grid,
+.wcam-auction-card,
+.wcam-single-auction {
+    box-sizing: border-box;
+}
+
+/* Page Instructions Banner */
+.wcam-instructions {
+    background: linear-gradient(135deg, var(--wcam-primary-light) 0%, var(--wcam-primary) 100%);
+    color: white;
+    padding: 24px;
+    border-radius: var(--wcam-radius);
+    margin-bottom: 32px;
+    box-shadow: var(--wcam-shadow-lg);
+}
+
+.wcam-instructions h3 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wcam-instructions h3:before {
+    content: "ℹ️";
+    font-size: 24px;
+}
+
+.wcam-instructions p {
+    margin: 0;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+.wcam-instructions ul {
+    margin: 12px 0 0 0;
+    padding-left: 24px;
+    opacity: 0.95;
+}
+
+.wcam-instructions li {
+    margin: 6px 0;
+}
+
+/* Auction Grid */
+.wcam-auctions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
+    margin: 20px 0;
+}
+
+@media (max-width: 640px) {
+    .wcam-auctions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Auction Card - Modern Design */
+.wcam-auction-card {
+    border: 1px solid var(--wcam-border);
+    border-radius: var(--wcam-radius);
+    overflow: hidden;
+    background: var(--wcam-bg);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--wcam-shadow-sm);
+}
+
+.wcam-auction-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--wcam-shadow-lg);
+    border-color: var(--wcam-primary-light);
+}
+
+.wcam-auction-thumbnail {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.wcam-auction-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.wcam-auction-card:hover .wcam-auction-thumbnail img {
+    transform: scale(1.05);
+}
+
+.wcam-no-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: linear-gradient(135deg, var(--wcam-primary-light) 0%, var(--wcam-primary) 100%);
+}
+
+.wcam-no-image-placeholder .dashicons {
+    font-size: 64px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.wcam-status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-status-active .wcam-status-badge {
+    background: linear-gradient(135deg, var(--wcam-success) 0%, var(--wcam-success-dark) 100%);
+/* Auction Body - Modern Design */
+.wcam-auction-body {
+    padding: 20px;
+}
+
+.wcam-auction-title {
+    margin: 0 0 16px 0;
+    font-size: 19px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.wcam-auction-title a {
+    color: var(--wcam-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.wcam-auction-title a:hover {
+    color: var(--wcam-primary);
+}
+
+.wcam-auction-meta {
+    margin: 16px 0;
+    background: var(--wcam-bg-light);
+    padding: 16px;
+    border-radius: var(--wcam-radius-sm);
+}
+
+.wcam-meta-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--wcam-border);
+}
+
+.wcam-meta-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.wcam-label {
+    font-weight: 500;
+    color: var(--wcam-text-light);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wcam-value {
+    color: var(--wcam-text);
+    font-weight: 600;
+}
+
+.wcam-price {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--wcam-success) 0%, var(--wcam-success-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+/* Modern Buttons */
+.wcam-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--wcam-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--wcam-shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.wcam-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease;
+}
+
+.wcam-btn:hover:before {
+    left: 100%;
+}
+
+.wcam-btn-primary {
+    background: linear-gradient(135deg, var(--wcam-primary) 0%, var(--wcam-primary-dark) 100%);
+    color: #fff;
+    border: 2px solid transparent;
+}
+
+.wcam-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--wcam-shadow);
+    color: #fff;
+}
+
+.wcam-btn-secondary {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: #fff;
+}
+
+.wcam-btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--wcam-shadow);
+    color: #fff;
+}
+/* Single Auction Page - Modern Design */
+.wcam-single-auction {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.wcam-auction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 3px solid var(--wcam-border);
+}
+
+.wcam-auction-header .entry-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--wcam-text);
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .wcam-auction-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+}
+
+.wcam-auction-content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 968px) {
+    .wcam-auction-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Photo Gallery on Single Auction */
+.wcam-photo-gallery {
+    width: 100%;
+}
+
+.wcam-gallery-main {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: var(--wcam-radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: var(--wcam-shadow-lg);
+}
+
+.wcam-gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+.wcam-photo-label {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wcam-gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+}
+
+.wcam-gallery-thumb {
+    position: relative;
+    height: 100px;
+    border-radius: var(--wcam-radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    border: 3px solid var(--wcam-border);
+    transition: all 0.3s ease;
+    background: var(--wcam-bg-light);
+}
+
+.wcam-gallery-thumb:hover {
+    border-color: var(--wcam-primary-light);
+    transform: translateY(-4px);
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-gallery-thumb.active {
+    border-color: var(--wcam-primary);
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumb-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    padding: 6px 4px 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 640px) {
+    .wcam-gallery-main {
+        height: 350px;
+    }
+
+    .wcam-gallery-thumbnails {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 8px;
+    }
+
+    .wcam-gallery-thumb {
+        height: 80px;
+    }
+}
+
+/* Bid Info - Modern Card Design */
+.wcam-bid-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 28px;
+    border-radius: var(--wcam-radius);
+    margin-bottom: 24px;
+    box-shadow: var(--wcam-shadow-lg);
+    color: white;
+}
+
+.wcam-bid-info > div {
+    margin: 16px 0;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: var(--wcam-radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wcam-bid-info .wcam-label {
+/* Bid Form - Modern Design */
+.wcam-bid-form {
+    background: white;
+    padding: 28px;
+    border: 2px solid var(--wcam-border);
+    border-radius: var(--wcam-radius);
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-bid-form h3 {
+    margin: 0 0 20px 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--wcam-text);
+}
+
+.wcam-form .form-group {
+    margin-bottom: 20px;
+}
+
+.wcam-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--wcam-text);
+    font-size: 14px;
+}
+
+.wcam-form input[type="number"],
+.wcam-form input[type="text"],
+.wcam-form input[type="email"],
+.wcam-form input[type="datetime-local"],
+.wcam-form input[type="file"],
+.wcam-form textarea,
+.wcam-form select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--wcam-border);
+    border-radius: var(--wcam-radius-sm);
+    font-size: 15px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.wcam-form input:focus,
+.wcam-form textarea:focus,
+.wcam-form select:focus {
+    outline: none;
+    border-color: var(--wcam-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.wcam-form .description {
+    margin: 8px 0 0 0;
+    font-size: 13px;
+    color: var(--wcam-text-light);
+    line-height: 1.5;
+}
+
+.wcam-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .wcam-form .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wcam-form .form-actions {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px solid var(--wcam-border);
+}
+
+/* Photo Upload Grid for Frontend */
+.wcam-photo-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.wcam-photo-upload-item {
+    background: var(--wcam-bg-light);
+    border: 2px dashed var(--wcam-border);
+    border-radius: var(--wcam-radius-sm);
+    padding: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.wcam-photo-upload-item:hover {
+    border-color: var(--wcam-primary-light);
+    background: white;
+}
+
+.photo-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--wcam-text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.wcam-file-input {
+    font-size: 13px !important;
+    padding: 10px !important;
+    cursor: pointer;
+}
+
+.wcam-file-input::-webkit-file-upload-button {
+    background: linear-gradient(135deg, var(--wcam-primary-light) 0%, var(--wcam-primary) 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wcam-file-input::-webkit-file-upload-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--wcam-shadow);
+}
+
+@media (max-width: 640px) {
+    .wcam-photo-upload-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}   gap: 32px;
+    margin-bottom: 32px;
+}
+/* Modern Tables */
+.wcam-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    background: white;
+    border-radius: var(--wcam-radius);
+    overflow: hidden;
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-table th,
+.wcam-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--wcam-border);
+}
+
+.wcam-table th {
+    background: linear-gradient(135deg, var(--wcam-primary) 0%, var(--wcam-primary-dark) 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wcam-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.wcam-table tbody tr:hover {
+    background: var(--wcam-bg-light);
+    transform: scale(1.01);
+}
+
+.wcam-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .wcam-table {
+        font-size: 14px;
+    }
+
+    .wcam-table th,
+    .wcam-table td {
+        padding: 12px 8px;
+    }
+}wcam-bid-info {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.wcam-bid-info > div {
+    margin: 12px 0;
+}
+/* Dashboard - Modern Design */
+.wcam-dashboard {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.wcam-dashboard h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--wcam-text);
+    margin-bottom: 24px;
+}
+
+.wcam-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+}
+
+.wcam-stat-card {
+    background: white;
+    color: var(--wcam-text);
+    padding: 28px;
+    border-radius: var(--wcam-radius);
+    text-align: center;
+    border: 2px solid var(--wcam-border);
+    box-shadow: var(--wcam-shadow);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.wcam-stat-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--wcam-primary) 0%, var(--wcam-primary-light) 100%);
+}
+
+.wcam-stat-card:nth-child(2):before {
+    background: linear-gradient(90deg, var(--wcam-success) 0%, #34d399 100%);
+}
+
+.wcam-stat-card:nth-child(3):before {
+    background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+}
+
+.wcam-stat-card:nth-child(4):before {
+    background: linear-gradient(90deg, var(--wcam-warning) 0%, #fbbf24 100%);
+}
+
+.wcam-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--wcam-shadow-lg);
+}
+
+.wcam-stat-value {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--wcam-primary) 0%, var(--wcam-primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.wcam-stat-label {
+    font-size: 14px;
+    color: var(--wcam-text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.wcam-form input[type="number"],
+.wcam-form input[type="text"],
+.wcam-form input[type="email"],
+.wcam-form input[type="datetime-local"],
+.wcam-form textarea,
+.wcam-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.wcam-form .description {
+    margin: 6px 0 0 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.wcam-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 600px) {
+    .wcam-form .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.wcam-buy-now {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px solid var(--wcam-border);
+    text-align: center;
+}
+
+.wcam-buy-now p {
+    font-size: 16px;
+    color: var(--wcam-text);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.wcam-message {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: var(--wcam-radius-sm);
+    font-weight: 500;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wcam-message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 2px solid var(--wcam-success);
+}
+
+.wcam-message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 2px solid var(--wcam-danger);
+}
+
+/* Tables */
+.wcam-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+.wcam-table th,
+.wcam-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.wcam-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+.wcam-table tr:hover {
+    background: #f8f9fa;
+}
+
+.wcam-details-table {
+    max-width: 600px;
+}
+
+.wcam-details-table th {
+    width: 40%;
+}
+
+/* Dashboard */
+.wcam-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.wcam-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 24px 0;
+}
+
+.wcam-stat-card {
+    background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
+    color: #fff;
+    padding: 24px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.wcam-stat-value {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.wcam-stat-label {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.wcam-dashboard-navigation {
+    margin: 32px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.wcam-dashboard-section {
+    margin: 40px 0;
+    padding: 32px;
+    background: white;
+    border-radius: var(--wcam-radius);
+    border: 2px solid var(--wcam-border);
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-dashboard-section h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--wcam-text);
+    margin: 0 0 24px 0;
+    padding-bottom: 16px;
+    border-bottom: 3px solid var(--wcam-primary);
+}
+
+/* Badges - Modern Design */
+.wcam-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wcam-badge-success {
+    background: linear-gradient(135deg, var(--wcam-success) 0%, var(--wcam-success-dark) 100%);
+    color: white;
+}
+
+.wcam-badge-warning {
+    background: linear-gradient(135deg, var(--wcam-warning) 0%, #f59e0b 100%);
+    color: white;
+}
+/* Pagination - Modern Design */
+.wcam-pagination {
+    margin: 48px 0;
+    text-align: center;
+}
+
+.wcam-pagination .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.wcam-pagination a,
+.wcam-pagination .current {
+    padding: 10px 16px;
+    border: 2px solid var(--wcam-border);
+    border-radius: var(--wcam-radius-sm);
+    text-decoration: none;
+    color: var(--wcam-text);
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.wcam-pagination a:hover {
+    border-color: var(--wcam-primary);
+    background: var(--wcam-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.wcam-pagination .current {
+    background: linear-gradient(135deg, var(--wcam-primary) 0%, var(--wcam-primary-dark) 100%);
+    color: white;
+    border-color: var(--wcam-primary);
+}
+
+/* Login Required - Modern Design */
+.wcam-login-required {
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: var(--wcam-radius);
+    border: 2px dashed var(--wcam-primary);
+}
+
+.wcam-login-required p {
+    font-size: 18px;
+    color: var(--wcam-text);
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* No Auctions - Modern Design */
+.wcam-no-auctions {
+    text-align: center;
+    padding: 80px 40px;
+    color: var(--wcam-text-light);
+    background: var(--wcam-bg-light);
+    border-radius: var(--wcam-radius);
+    font-size: 18px;
+}
+
+/* Category Filters - Modern Pill Design */
+.wcam-category-filters {
+    margin: 32px 0;
+    padding: 28px;
+    background: white;
+    border-radius: var(--wcam-radius);
+    border: 2px solid var(--wcam-border);
+    box-shadow: var(--wcam-shadow-sm);
+}
+
+.wcam-filter-label {
+    font-weight: 600;
+    color: var(--wcam-text);
+    font-size: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-icon {
+    font-size: 20px;
+}
+
+.wcam-category-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.wcam-category-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--wcam-bg-light);
+    border: 2px solid var(--wcam-border);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--wcam-text);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.wcam-category-pill:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--wcam-primary-light) 0%, var(--wcam-primary) 100%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.wcam-category-pill:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--wcam-shadow);
+    border-color: var(--wcam-primary-light);
+}
+
+.wcam-category-pill:hover:before {
+    opacity: 0.1;
+}
+
+.wcam-category-pill.active {
+    background: linear-gradient(135deg, var(--wcam-primary-light) 0%, var(--wcam-primary) 100%);
+    color: white;
+    border-color: var(--wcam-primary);
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-category-pill.active:before {
+    opacity: 0;
+}
+
+.pill-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.pill-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.wcam-category-pill.active .pill-count {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Category Badges on Cards */
+.wcam-auction-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.wcam-category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.15) 100%);
+    color: var(--wcam-primary);
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    transition: all 0.2s ease;
+}
+
+.wcam-category-badge:hover {
+    background: linear-gradient(135deg, var(--wcam-primary-light) 0%, var(--wcam-primary) 100%);
+    color: white;
+    border-color: var(--wcam-primary);
+    transform: translateY(-1px);
+}
+
+/* Category Badges on Single Auction */
+.wcam-auction-categories-single {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.wcam-category-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.15) 100%);
+    color: var(--wcam-primary);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid rgba(99, 102, 241, 0.2);
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.wcam-category-badge-large:hover {
+    background: linear-gradient(135deg, var(--wcam-primary-light) 0%, var(--wcam-primary) 100%);
+    color: white;
+    border-color: var(--wcam-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--wcam-shadow);
+}
+
+.badge-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Single Auction Header with Categories */
+.wcam-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Old Filters - Keep for backwards compatibility but hide */
+.wcam-filters {
+    margin: 24px 0;
+    padding: 20px;
+    background: white;
+    border-radius: var(--wcam-radius);
+    border: 2px solid var(--wcam-border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.wcam-filters label {
+    font-weight: 600;
+    color: var(--wcam-text);
+}
+
+.wcam-filters select {
+    padding: 10px 16px;
+    border: 2px solid var(--wcam-border);
+    border-radius: var(--wcam-radius-sm);
+    font-size: 15px;
+    font-weight: 500;
+    min-width: 200px;
+    transition: all 0.2s ease;
+}
+
+.wcam-filters select:focus {
+    outline: none;
+    border-color: var(--wcam-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Auction Description & Details */
+.wcam-auction-description,
+.wcam-auction-details,
+.wcam-recent-bids {
+    background: white;
+    padding: 32px;
+    border-radius: var(--wcam-radius);
+    margin-bottom: 32px;
+    border: 2px solid var(--wcam-border);
+    box-shadow: var(--wcam-shadow);
+}
+
+.wcam-auction-description h2,
+.wcam-auction-details h3,
+.wcam-recent-bids h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--wcam-text);
+    margin: 0 0 20px 0;
+    padding-bottom: 16px;
+    border-bottom: 3px solid var(--wcam-primary);
+}
+
+.wcam-auction-description .entry-content {
+    line-height: 1.8;
+    color: var(--wcam-text);
+}
+
+.wcam-details-table {
+    max-width: 100%;
+}
+
+.wcam-details-table th {
+    width: 35%;
+    color: var(--wcam-text-light);
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .wcam-auction-header .entry-title {
+        font-size: 24px;
+    }
+
+    .wcam-dashboard h2 {
+        font-size: 24px;
+    }
+
+    .wcam-stat-value {
+        font-size: 36px;
+    }
+
+    .wcam-current-bid .wcam-amount {
+        font-size: 32px;
+    }
+
+    .wcam-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wcam-filters select {
+        width: 100%;
+    }
+
+    /* Mobile category filters */
+    .wcam-category-filters {
+        padding: 20px;
+    }
+
+    .wcam-filter-label {
+        font-size: 14px;
+    }
+
+    .wcam-category-pills {
+        gap: 8px;
+    }
+
+    .wcam-category-pill {
+        padding: 10px 16px;
+        font-size: 13px;
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+
+    .pill-icon {
+        font-size: 14px;
+    }
+
+    .pill-count {
+        min-width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+
+    /* Mobile category badges */
+    .wcam-auction-categories {
+        gap: 4px;
+    }
+
+    .wcam-category-badge {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+
+    .wcam-category-badge-large {
+        font-size: 12px;
+        padding: 6px 14px;
+    }
+
+    .wcam-header-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Loading State */
+.wcam-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.wcam-loading:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid var(--wcam-primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.wcam-filters label {
+    margin-right: 8px;
+    font-weight: 600;
+}
+
+.wcam-filters select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
